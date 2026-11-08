@@ -1,0 +1,5 @@
+{
+  "host": "0.0.0.0", "port": 8000,
+  "master_url": "http://web-master:8000", "request_timeout": 130,
+  "max_request_bytes": 3000000
+}

@@ -1,0 +1,72 @@
+name: credit-mvp
+services:
+  collector:
+    build:
+      context: .
+      dockerfile: services/collector/Dockerfile
+    image: credit-mvp-collector:local
+    volumes:
+      - ./data:/app/data:ro
+      - collector-logs:/app/var/collector
+      - ./services/collector/config.json:/app/services/collector/config.json:ro
+    healthcheck: &healthcheck
+      test: ["CMD", "python", "-c", "import json,urllib.request; from common.config import load_config; import os; port=load_config(os.environ['SERVICE'])['port']; urllib.request.urlopen(f'http://localhost:{port}/health',timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+      start_period: 10s
+  storage:
+    build:
+      context: .
+      dockerfile: services/storage/Dockerfile
+    image: credit-mvp-storage:local
+    volumes:
+      - storage-data:/app/var/storage
+      - ./services/storage/config.json:/app/services/storage/config.json:ro
+    healthcheck: *healthcheck
+  ml:
+    build:
+      context: .
+      dockerfile: services/ml/Dockerfile
+    image: credit-mvp-ml:local
+    volumes:
+      - ml-artifacts:/app/var/ml
+      - ./services/ml/config.json:/app/services/ml/config.json:ro
+    depends_on:
+      storage:
+        condition: service_healthy
+    healthcheck: *healthcheck
+  web-master:
+    build:
+      context: .
+      dockerfile: services/web_master/Dockerfile
+    image: credit-mvp-web-master:local
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    volumes:
+      - ./services/web_master/config.json:/app/services/web_master/config.json:ro
+    depends_on:
+      collector:
+        condition: service_healthy
+      storage:
+        condition: service_healthy
+      ml:
+        condition: service_healthy
+    healthcheck: *healthcheck
+  visualization:
+    build:
+      context: .
+      dockerfile: services/visualization/Dockerfile
+    image: credit-mvp-visualization:local
+    ports:
+      - "127.0.0.1:${GUI_PORT:-8080}:8000"
+    volumes:
+      - ./services/visualization/config.json:/app/services/visualization/config.json:ro
+    depends_on:
+      web-master:
+        condition: service_healthy
+    healthcheck: *healthcheck
+volumes:
+  collector-logs:
+  storage-data:
+  ml-artifacts:

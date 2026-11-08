@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Анализ кредитных данных</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<header><div class="wrap"><h1>Прогноз дефолта по кредиту</h1><div id="system" aria-live="polite">Проверяем сервисы…</div></div></header>
+<main class="wrap">
+  <div id="message" role="status" aria-live="polite" hidden></div>
+  <section>
+    <div class="section-title"><span>01</span><h2>Данные</h2></div>
+    <form id="collect-form"><label>Номер батча <input id="batch-number" type="number" value="1" min="1" required></label><button>Загрузить батч</button><button id="refresh" type="button" class="secondary">Обновить списки</button></form>
+    <div class="table-scroll"><table><thead><tr><th>Название</th><th>Тип</th><th>Строк</th><th>Источник</th><th>Действия</th></tr></thead><tbody id="datasets"></tbody></table></div>
+    <details id="preview-panel"><summary>Предпросмотр выбранного датасета</summary><div class="table-scroll" id="preview"></div></details>
+  </section>
+  <section>
+    <div class="section-title"><span>02</span><h2>Обучение</h2></div>
+    <form id="train-form"><label>Сырой датасет <select id="training-data" required></select></label><label>Алгоритм <select id="model-algorithm"><option value="LogisticRegression">Logistic Regression</option><option value="RandomForest">Random Forest</option></select></label><label>Название модели <input id="model-name" value="Модель 1" maxlength="120" required></label><button>Создать и обучить</button></form>
+  </section>
+  <section>
+    <div class="section-title"><span>03</span><h2>Прогноз</h2></div>
+    <form id="predict-form">
+      <label>Обученная модель <select id="prediction-model" required></select></label>
+      <label>Источник данных <select id="prediction-source"><option value="dataset">Загруженный батч</option><option value="csv">CSV-файл</option></select></label>
+      <label id="prediction-dataset-field">Батч для прогноза <select id="prediction-dataset" required></select></label>
+      <label id="prediction-file-field" hidden>CSV с кредитами <input id="prediction-file" type="file" accept=".csv,text/csv"></label>
+      <button>Получить прогноз</button>
+    </form>
+    <div id="prediction-note"></div>
+    <div class="table-scroll" id="predictions"></div>
+  </section>
+  <section>
+    <div class="section-title"><span>04</span><h2>Оценка модели</h2></div>
+    <form id="summary-form"><label>Модель <select id="summary-model" required></select></label><button>Показать оценку</button></form>
+    <div id="summary"></div>
+  </section>
+</main>
+</body>
+</html>

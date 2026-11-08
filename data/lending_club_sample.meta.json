@@ -1,0 +1,21 @@
+{
+  "source": "https://www.kaggle.com/datasets/adarshsng/lending-club-loan-data-csv",
+  "sampling": "reservoir sample from all eligible rows, then shuffle",
+  "source_complete": true,
+  "seed": 42,
+  "scanned_rows": 2260668,
+  "eligible_rows": 1303607,
+  "rows": 10000,
+  "sample_issue_date_range": [
+    "2007-07",
+    "2018-12"
+  ],
+  "sample_missing_values": {
+    "dti": 2,
+    "revol_util": 4
+  },
+  "class_counts": {
+    "Fully Paid": 8028,
+    "Charged Off": 1972
+  }
+}

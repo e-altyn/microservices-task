@@ -1,0 +1,10 @@
+{
+  "host": "0.0.0.0",
+  "port": 8000,
+  "source_path": "data/lending_club_sample.csv",
+  "source_name": "Lending Club / sample 10000",
+  "is_synthetic": false,
+  "batch_size": 1000,
+  "max_source_rows": 10000,
+  "log_path": "var/collector/downloads.log"
+}

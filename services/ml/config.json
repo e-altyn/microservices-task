@@ -1,0 +1,17 @@
+{
+  "host": "0.0.0.0",
+  "port": 8000,
+  "storage_url": "http://storage:8000",
+  "request_timeout": 30,
+  "artifact_dir": "var/ml",
+  "test_size": 0.25,
+  "random_state": 42,
+  "max_iter": 1000,
+  "min_training_rows": 40,
+  "class_weight": "balanced",
+  "random_forest": {
+    "n_estimators": 100,
+    "max_depth": 8,
+    "min_samples_leaf": 5
+  }
+}

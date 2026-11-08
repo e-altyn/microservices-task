@@ -1,0 +1,6 @@
+{
+  "host": "0.0.0.0", "port": 8000,
+  "collector_url": "http://collector:8000", "storage_url": "http://storage:8000",
+  "ml_url": "http://ml:8000", "request_timeout": 120,
+  "max_upload_bytes": 2000000
+}
